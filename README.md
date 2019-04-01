@@ -26,6 +26,7 @@ Then, all data for the task are located in the folder "dataset". There are the f
 - annotations: annotation for each page
 - corpus_txt: all text files of the pages OCRed from the pdfs. 
 - corpus_pdf: all PDFs of the pages
+- content.csv: file, listing all articles including their title and author (if available)
 
 
 
