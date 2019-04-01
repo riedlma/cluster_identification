@@ -1,0 +1,7 @@
+OCR	0.5
+1	ad	
+167	OTH1	
+204	OTH2	
+220	OTH3	
+246	OTH4	
+270	ad	
