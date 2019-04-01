@@ -3,6 +3,31 @@
 source code and text collection for the paper "Clustering-Based Article Identification in Historical Newspapers" published at the LaTech workshop.
 
 
+# Cluster data:
+
+1) download dataset:
+ 
+```
+sh scripts/download_newspaper.sh 
+```
+ 
+
+
+# Dataset:
+
+The dataset needs to be downloaded using the script:
+
+```
+sh scripts/download_newspaper.sh 
+```
+
+Then, all data for the task are located in the folder "dataset". There are the following folder and file:
+
+- annotations: annotation for each page
+- corpus_txt: all text files of the pages OCRed from the pdfs. 
+- corpus_pdf: all PDFs of the pages
+- content.csv: file, listing all articles including their title and author (if available)
+
 
 
 ## Citation
