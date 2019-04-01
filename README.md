@@ -10,8 +10,7 @@ source code and text collection for the paper "Clustering-Based Article Identifi
 
 ```
 @inproceedings{riedl19:historic_newspaper,
-  title = {Clustering-Based Article Identification in Historical Newspapers
-},
+  title = {Clustering-Based Article Identification in Historical Newspapers},
   author = {Riedl, Martin, Daniela Betz and Padó, Sebastian},
   booktitle = {Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature},
   series={LaTeCH-CLfL 2019},
