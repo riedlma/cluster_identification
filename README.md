@@ -49,4 +49,4 @@ Then, all data for the task are located in the folder "dataset". There are the f
 
 ## License
 
-This project is licensed under the terms of the Apache 2.0 ASL license (as Tensorflow and derivatives). If used for research, citation would be appreciated.
+This project is licensed under the terms of the Apache 2.0 ASL license. If used for research, citation would be appreciated. The annotation data is published under the permissive CC-BY license.
