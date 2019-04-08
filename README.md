@@ -5,12 +5,13 @@ source code and text collection for the paper "Clustering-Based Article Identifi
 
 Table of Content
 ================
-[Clustering of Texts](#clustering-of-texts)
-[Automatic Text Segmentation](#automatic-text-segmentation)
-[Dataset](#dataset)
-[Replicate results from the paper](#replicate-results–from-the-paper)
-[Citation](#citation)
-[License](#license)
+
+- [Clustering of Texts](#clustering-of-texts)
+- [Automatic Text Segmentation](#automatic-text-segmentation)
+- [Dataset](#dataset)
+- [Replicate results from the paper](#replicate-results–from-the-paper)
+- [Citation](#citation)
+- [License](#license)
 
 # Clustering of Texts
 
