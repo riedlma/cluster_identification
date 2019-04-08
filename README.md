@@ -96,7 +96,7 @@ The input_directory contains the text documents, the annotation_dir the annotate
 
 # Dataset:
 
-The dataset needs to be downloaded using the script:
+We annotated pages from the March 1912 issues of the New York tribune Sunday magazine. We annotated both advertisements and articles. We provide the annotations for the dataset, however, the raw texts of the dataset ca be downloaded using the script:
 
 ```
 sh scripts/download_newspaper.sh 
@@ -111,6 +111,11 @@ Then, all data for the task are located in the folder "dataset". There are the f
 
 # Embeddings
 
+Embeddings generated for English for the year 1912 are generated and can be downloaded using the following script:
+
+```
+sh scripts/download_embeddings.sh 
+```
 
 
 # Replicate results from the paper
