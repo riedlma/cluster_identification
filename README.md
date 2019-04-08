@@ -99,9 +99,53 @@ Then, all data for the task are located in the folder "dataset". There are the f
 - corpus_pdf: all PDFs of the pages
 - content.csv: file, listing all articles including their title and author (if available)
 
+# Get embeddings
 
 
-## Citation
+
+# Replicate results from the paper:
+
+First you need to download dataset and embeddings:
+
+```
+sh scripts/download_newspaper.sh
+sh scripts/download_embeddings.sh 
+```
+
+## Results with gold segments
+
+### By Issue:
+
+```
+python execute_clustering_gold_standard_arg.py dataset/corpus_txt dataset/annotations/ -esc -pd  -n 2 3 4 5 6 7 8 -rs 1 2 3 4 5 -jws -e200 embeddings/year1912.clean.txt.fasttext.200.bin -nc 10 11 12 13 14 15 
+```
+
+### All Issues:
+```
+python execute_clustering_gold_standard_arg.py dataset/corpus_txt dataset/annotations/ -esc -pa  -n 2 3 4 5 6 7 8 -rs 1 2 3 4 5 -jws -e200 embeddings/year1912.clean.txt.fasttext.200.bin -nc 50 51 52 53 54 55 
+```
+
+## Results with automatic segments
+
+First, we perform TextTiling:
+
+```
+python texttiling_app.py dataset/corpus_txt dataset/corpus_txt_texttiling
+```
+
+### By Issue:
+
+```
+python execute_clustering_gold_standard_arg.py dataset/corpus_txt dataset/annotations/ -esc -pd  -n 2 3 4 5 6 7 8 -rs 1 2 3 4 5 -jws -e200 embeddings/year1912.clean.txt.fasttext.200.bin -nc 10 11 12 13 14 15 -aaf dataset/corpus_txt_texttiling
+```
+
+### All Issues:
+```
+python execute_clustering_gold_standard_arg.py dataset/corpus_txt dataset/annotations/ -esc -pa  -n 2 3 4 5 6 7 8 -rs 1 2 3 4 5 -jws -e200 embeddings/year1912.clean.txt.fasttext.200.bin -nc 50 51 52 53 54 55 -aaf dataset/corpus_txt_texttiling
+```
+
+
+# Citation
 
 
 ```
