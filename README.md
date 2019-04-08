@@ -9,7 +9,7 @@ Table of Content
 - [Clustering of Texts](#clustering-of-texts)
 - [Automatic Text Segmentation](#automatic-text-segmentation)
 - [Dataset](#dataset)
-- [Replicate results from the paper](#replicate-results–from-the-paper)
+- [Replicate results from the paper](#replicate-results-from-the-paper)
 - [Citation](#citation)
 - [License](#license)
 
