@@ -1,0 +1,7 @@
+numpy==1.15.4
+fasttext==0.8.3
+matplotlib==3.0.3
+bcubed==1.5
+nltk==3.4
+segeval==2.0.11
+scikit_learn==0.20.3
