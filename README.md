@@ -69,12 +69,19 @@ optional arguments:
  
 # Automatic Text Segmentation
 
-The automatic segmentation using TextTiling can be performed with the following command:
+The automatic segmentation using TextTiling can be performed with the following command, expecting as parameters an input directory of files and that will write the segmented documents to output_directory.
 
 ```
-
+python texttiling_app.py input_directory output_directory
 ```
 
+In order to evaluate the segmentation, the following script can be used:
+
+```
+python texttiling_eval.py input_directory annotation_dir min_ocr
+```
+
+The input_directory contains the text documents, the annotation_dir the annotated segment boundaries and the min_ocr the mininmal OCR score that a file needs to fullfy in order to be considered for the evaluation. 
 
 
 # Dataset:
