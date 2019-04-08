@@ -3,14 +3,78 @@
 source code and text collection for the paper "Clustering-Based Article Identification in Historical Newspapers" published at the LaTech workshop.
 
 
-# Cluster data:
+# Clustering of Texts:
 
-1) download dataset:
- 
+Before the clustering can be performed, the dataset needs to be downloaded and the segmentation boundaries need to be known.
+Then, the clustering can be performed with the following script:
+
 ```
-sh scripts/download_newspaper.sh 
+python execute_clustering_gold_standard_arg.py dataset/corpus_txt dataset/annotations/ -esc -pd -rs 1 2 3 4 5 
 ```
+
+The script allows lots of parameters, which are listed in the help command:
+
+```
+python execute_clustering_gold_standard_arg.py --help
+usage: execute_clustering_gold_standard_arg.py [-h] [-e100 EMBEDDINGS100]
+                                               [-e200 EMBEDDINGS200]
+                                               [-mo MIN_OCR]
+                                               [-aaf AUTOMATIC_ANNOTATION_FOLDER]
+                                               [-sc] [-esc] [-nc NC [NC ...]]
+                                               [-n NGRAM [NGRAM ...]] [-pf]
+                                               [-pd] [-pa] [-jws]
+                                               [-rs RS [RS ...]]
+                                               document_folder
+                                               annotation_folder
+
+Execute the clustering and segmentation and the evaluation
+
+positional arguments:
+  document_folder       folder for the text document
+  annotation_folder     folder for the annotations of the text document
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e100 EMBEDDINGS100, --embeddings100 EMBEDDINGS100
+                        binary for the 100 dimensional fastText embeddings. If
+                        not active, they will not be used.
+  -e200 EMBEDDINGS200, --embeddings200 EMBEDDINGS200
+                        binary for the 200 dimensional fastText embeddings. If
+                        not active, they will not be used.
+  -mo MIN_OCR, --min-ocr MIN_OCR
+                        minimum OCR score (default: -100.0)
+  -aaf AUTOMATIC_ANNOTATION_FOLDER, --automatic_annotation_folder AUTOMATIC_ANNOTATION_FOLDER
+  -sc, --spectral_clustering
+                        use standard spectral clustering
+  -esc, --exponential_spectral_clustering
+                        use exponential spectral clustering
+  -nc NC [NC ...], --number_of_cluster NC [NC ...]
+                        Specify the number of clusters to be used (can be a
+                        list of numbers) [1-15,20,30,40,50,60,100]
+  -n NGRAM [NGRAM ...], --ngram NGRAM [NGRAM ...]
+                        specify the N for the n-grams that are extracted
+                        (default: 3)
+  -pf, --process_file   Process each file individually
+  -pd, --process_day    Process files day-wise
+  -pa, --process_all    Process all files
+  -jws, --jaccard_word_sim
+                        apply Jaccard Word similarity
+  -rs RS [RS ...], --random_states RS [RS ...]
+                        Using this option, the clustering will be performed as
+                        often as seeds are provided. If none is given, a time-
+                        based random seed is used.
+```
+
  
+ 
+# Automatic Text Segmentation
+
+The automatic segmentation using TextTiling can be performed with the following command:
+
+```
+
+```
+
 
 
 # Dataset:
