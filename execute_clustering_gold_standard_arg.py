@@ -24,12 +24,12 @@ parser.add_argument("-aaf","--automatic_annotation_folder",dest="automatic_annot
 parser.add_argument("-sc","--spectral_clustering",help="use standard spectral clustering",dest="sc",action="store_true")
 parser.add_argument("-esc","--exponential_spectral_clustering",help="use exponential spectral clustering",dest="esc",action="store_true")
 parser.add_argument("-nc","--number_of_cluster",help="Specify the number of clusters to be used (can be a list of numbers)",dest="nc", nargs='+', type=int,default=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,30,40,50,60,100])
-parser.add_argument("-n","--ngram",help="specify the N for the n-grams that are extracted (default: 3)", dest="ngram",default=3,type=int)
+parser.add_argument("-n","--ngram",help="specify the N for the n-grams that are extracted (default: 3)", dest="ngram",default=[3],nargs='+',type=int)
 parser.add_argument("-pf","--process_file",help="Process each file individually",dest="pf",action="store_true")
 parser.add_argument("-pd","--process_day",help="Process files day-wise",dest="pd",action="store_true")
 parser.add_argument("-pa","--process_all",help="Process alle files",dest="pa",action="store_true")
 parser.add_argument("-jws","--jaccard_word_sim",help="apply Jaccard Word similarity",dest="jws",action="store_true")
-parser.add_argument("-fr","--fix_random", help="use fixed random number for same results for the spectral clustering",dest="fr", action="store_true")
+parser.add_argument("-rs","--random_states", help="Using this option, the clustering will be performed as often as seeds are provided. If none is given, a time-based random seed is used.",dest="rs",nargs="+",type =int)
 
 
 args = parser.parse_args()
@@ -57,8 +57,12 @@ annotation_suffix = "-merged-merged.txt"
 automatic_annotation_suffix = ".txt.anno"
 
 #parameters that will be combined and iterated
+sims = []
 
-sims = [similarities.JaccardNGramSimilarity(args.ngram)]#, similarities.DiceNGramSimilarity()]
+for n in args.ngram:
+    sims.append(similarities.JaccardNGramSimilarity(n))
+
+#sims = [similarities.JaccardNGramSimilarity(args.ngram)]#, similarities.DiceNGramSimilarity()]
 if args.jws:
     sims.append(similarities.JaccardWordSimilarity())
 if embeddings_100!=None:
@@ -68,10 +72,10 @@ if embeddings_200!=None:
 clusterings = []
 if args.sc:
     print("Clustering: Spectral Clustering")
-    clusterings.append(clustering.SpectralClustering(args.fr))
+    clusterings.append(clustering.SpectralClustering())
 if args.esc:
     print("Clustering: Exponential Spectral Clustering")
-    clusterings.append(clustering.SpectralExponentialClustering(args.fr))
+    clusterings.append(clustering.SpectralExponentialClustering())
 
 #number_of_cluster = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,30,40,50,60,100]
 #number_of_cluster = [2]
@@ -81,7 +85,7 @@ number_of_cluster = args.nc
 print("Number of cluster",number_of_cluster)
 #number_of_cluster = [12,13,14,52,53,54]
 #number_of_cluster = [12]#,13,14,52,53,54]
-
+#number_of_cluster = range(1,100)
 
 processes = []
 if args.pf:
@@ -145,8 +149,8 @@ def evaluate(instance, results,gold = True):
     else:
 
         goldLabels = instance.getAutoLabels()
-        print("autolabels",goldLabels)
-        print("results",results)
+        #print("autolabels",goldLabels)
+        #print("results",results)
         arr = evaluateBCubedNG(goldLabels,results)
         arr.append(evaluateNMING(goldLabels,results))
     return arr
@@ -156,7 +160,7 @@ def getName(instance):
 
 matrix_map = {}
 
-def startProcessingSegments(dataset,sim_measure,clustering,num_cluster,output_str,gold =True):
+def startProcessingSegments(dataset,sim_measure,clustering,num_cluster,output_str,gold =True,random_seeds=None):
     
     
     #iterate over segments:
@@ -192,11 +196,19 @@ def startProcessingSegments(dataset,sim_measure,clustering,num_cluster,output_st
                     matrix[j][i] = similarity
             matrix_map[name]=matrix
         #print("Matrix Length",len(matrix))
-        cluster_results = clustering.cluster(num_cluster,matrix)
-        #print("Cluster")
-        #print(cluster_results)
-        eval_results = evaluate(instance,cluster_results,gold)
-        
+        if random_seeds == None:
+            cluster_results = clustering.cluster(num_cluster,matrix)
+            #print("Cluster")
+            #print(cluster_results)
+            eval_results = evaluate(instance,cluster_results,gold)
+        else:
+            merge_results = [0.0]*4
+            for seed in random_seeds:
+                cluster_results = clustering.cluster(num_cluster,matrix,seed)
+                eval_results = evaluate(instance,cluster_results,gold)
+                merge_results+=np.array(eval_results)
+            eval_results = [x/len(random_seeds) for x in merge_results]
+            
         str_eval_results = ""
         for r in eval_results:
             str_eval_results+="\t%f"%(r)
@@ -240,6 +252,7 @@ for process in processes:
                     continue
                 str_out = "%s\t%s(%d)\t%s\t"%(str(process),getName(clustering),num,sim.getName())
                 #print("%s\t%s(%d)\t%s\t"%(str(process),getName(clustering),num,getName(sim)))
-                startProcessingSegments(dataset, sim,clustering,num,str_out,gold)
+                random_seeds= args.rs
+                startProcessingSegments(dataset, sim,clustering,num,str_out,gold,random_seeds)
 
                 sys.stdout.flush()            
